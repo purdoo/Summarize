@@ -1,4 +1,5 @@
 from nltk import tokenize #py -m pip install nltk, then run import nltk, nltk.download()
+from nltk.stem.snowball import SnowballStemmer
 
 def textToSentences(text):
   return tokenize.sent_tokenize(text)
