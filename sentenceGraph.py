@@ -17,9 +17,9 @@ class SentenceGraph:
     
   def compareSentences(self):
     for a,b in itertools.combinations(self.graphVertices, 2):
-      #print(str(a.order) + " : " + str(b.order))
-      commonWords = set.intersection(set(a.split(' ')), set(b.split(' ')))
-      print(len(commonWords))
+      commonWords = set.intersection(set(a.content.split(' ')), set(b.content.split(' ')))
+      #print(len(commonWords))
+      self.updateConnection(a.order, b.order, len(commonWords))
 
   def showVertices(self):
     print(self.graphVertices) # currently prints objects
@@ -62,17 +62,19 @@ def commonTest():
   A = SentenceNode(1)
   B = SentenceNode(2)
   C = SentenceNode(3)
-  D = SentenceNode(3)
+  D = SentenceNode(4)
   A.addContent('Today in the city I saw a cat chasing a rat around on the street')
   B.addContent('The cat could not catch the rat because the cat was too fat')
   C.addContent('I felt bad because the cat was sad')
   D.addContent('You never know what you will find in the city')
   testGraph = SentenceGraph()
-  testGraph.addNode(sentenceA)
-  testGraph.addNode(sentenceB)
-  testGraph.addNode(sentenceC)
-  testGraph.addNode(sentenceD)
+  testGraph.addNode(A)
+  testGraph.addNode(B)
+  testGraph.addNode(C)
+  testGraph.addNode(D)
+  testGraph.compareSentences()
+  testGraph.showEdges()
 
 if __name__ == "__main__":
-  test()
+  commonTest()
   
