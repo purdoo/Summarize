@@ -3,9 +3,9 @@ import itertools
 class SentenceGraph:
   graphVertices = [] # the graph vertices are simply SentenceNode objects  
   graphEdges = {} # key = (nodeA.order, nodeB.order) | value = weight  
+  selectedSentences = []  
   def __init__(self):
     pass
-
   def addNode(self, node):
     self.graphVertices.append(node)
   
@@ -17,9 +17,19 @@ class SentenceGraph:
     
   def compareSentences(self):
     for a,b in itertools.combinations(self.graphVertices, 2):
+      # currently does not weight sentence length
       commonWords = set.intersection(set(a.content.split(' ')), set(b.content.split(' ')))
-      #print(len(commonWords))
       self.updateConnection(a.order, b.order, len(commonWords))
+
+  def filterSentences(self, factor):  
+    #maxValue = max(self.graphEdges.values(), key=int)
+    highScore = 0    
+    edge = (0,0)    
+    for k,v in self.graphEdges.items():
+      if v > highScore:
+        highScore = v
+        edge = k        
+    print(edge)
 
   def showVertices(self):
     print(self.graphVertices) # currently prints objects
@@ -39,6 +49,13 @@ class SentenceNode:
 
 def compareSentences():
   pass
+
+
+
+
+
+
+
 
 def test():
   sentenceA = SentenceNode(1)
@@ -74,7 +91,7 @@ def commonTest():
   testGraph.addNode(D)
   testGraph.compareSentences()
   testGraph.showEdges()
-
+  testGraph.filterSentences(1)
 if __name__ == "__main__":
   commonTest()
   
