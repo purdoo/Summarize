@@ -22,17 +22,21 @@ class SentenceGraph:
       self.updateConnection(a.order, b.order, len(commonWords))
 
   def filterSentences(self, factor):  
-    #maxValue = max(self.graphEdges.values(), key=int)
-    highScore = 0    
-    edge = (0,0)    
-    for k,v in self.graphEdges.items():
-      if v > highScore:
-        highScore = v
-        edge = k        
-    print(edge)
+    edgeIndexes = []
+    for x in range(factor):    
+      highScore = 0    
+      edge = (0,0)    
+      for k,v in self.graphEdges.items():
+        if v > highScore:
+          highScore = v
+          edge = k        
+      self.graphEdges.pop(edge, None)      
+      edgeIndexes.append(edge)
+    return edgeIndexes
 
   def showVertices(self):
     print(self.graphVertices) # currently prints objects
+
   def showEdges(self):
     print(self.graphEdges)
 
@@ -64,12 +68,10 @@ def test():
   sentenceA.addContent('My name is Chris Liow.')
   sentenceB.addContent('Sometimes I stay in the office after hours to work on personal projects.')
   sentenceC.addContent('This is a graph theory implementation to evaluate the \'relatedness\' of sentences.')
-  
   testGraph = SentenceGraph()
   testGraph.addNode(sentenceA)
   testGraph.addNode(sentenceB)
   testGraph.addNode(sentenceC)
-  
   testGraph.updateConnection(1,2,5)
   testGraph.updateConnection(1,3,3)
   testGraph.updateConnection(1,2,1)
@@ -91,7 +93,8 @@ def commonTest():
   testGraph.addNode(D)
   testGraph.compareSentences()
   testGraph.showEdges()
-  testGraph.filterSentences(1)
+  print(testGraph.filterSentences(2))
+  
 if __name__ == "__main__":
   commonTest()
   
