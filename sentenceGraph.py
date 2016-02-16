@@ -2,7 +2,8 @@ import itertools
 
 class SentenceGraph:
   graphVertices = [] # the graph vertices are simply SentenceNode objects  
-  graphEdges = {} # key = (nodeA.order, nodeB.order) | value = weight  
+  graphEdges = {} # key = (nodeA.order, nodeB.order) | value = weight (int or float) 
+  sentenceScores = {} # key = SentenceNode order (int) | value = score (int or float) 
   selectedSentences = []  
   def __init__(self):
     pass
@@ -21,7 +22,7 @@ class SentenceGraph:
       commonWords = set.intersection(set(a.content.split(' ')), set(b.content.split(' ')))
       self.updateConnection(a.order, b.order, len(commonWords))
 
-  def filterSentences(self, factor):  
+  def filterSentences(self, factor): # should be renamed or repurposed as filterEdges  
     edgeIndexes = []
     for x in range(factor):    
       highScore = 0    
