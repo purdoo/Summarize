@@ -36,8 +36,10 @@ class SentenceGraph:
     return edgeIndexes
 
   def showVertices(self):
-    print(self.graphVertices) # currently prints objects
-
+    #print(self.graphVertices) # currently prints objects
+    print("Graph Vertices")
+    for v in self.graphVertices:
+      print(v.content)
   def showEdges(self):
     print(self.graphEdges)
 
