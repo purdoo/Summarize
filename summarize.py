@@ -36,7 +36,7 @@ if __name__ == "__main__":
     sNode.addContent(t)
     summaryBot.addNode(sNode)
     order += 1
-  #summaryBot.showEdges()
-  summaryBot.showVertices()
+  #summaryBot.showVertices()
   summaryBot.compareSentences()
   summaryBot.showEdges()
+  summaryBot.rankSentences()

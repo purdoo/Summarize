@@ -4,25 +4,37 @@ class SentenceGraph:
   graphVertices = [] # the graph vertices are simply SentenceNode objects  
   graphEdges = {} # key = (nodeA.order, nodeB.order) | value = weight (int or float) 
   sentenceScores = {} # key = SentenceNode order (int) | value = score (int or float) 
-  selectedSentences = []  
+  ranks = {}  
+
   def __init__(self):
     pass
+
   def addNode(self, node):
     self.graphVertices.append(node)
-  
+
   def updateConnection(self, a, b, weight):
     if((a,b) in self.graphEdges):
       self.graphEdges[(a,b)] += weight
     else:
-      self.graphEdges[(a,b)] = weight
-    
+      self.graphEdges[(a,b)] = weight    
+
   def compareSentences(self):
     for a,b in itertools.combinations(self.graphVertices, 2):
       # currently does not weight sentence length
       commonWords = set.intersection(set(a.content.split(' ')), set(b.content.split(' ')))
       self.updateConnection(a.order, b.order, len(commonWords))
 
-  def filterSentences(self, factor): # should be renamed or repurposed as filterEdges  
+  def rankSentences(self):
+    for V in self.graphVertices:
+      for key in self.graphEdges:       
+        if V.order in key:
+          if V.order in self.ranks:
+            self.ranks[V.order] += self.graphEdges[key]
+          else:
+            self.ranks[V.order] = self.graphEdges[key]
+    print(self.ranks)
+
+  def filterEdges(self, factor): # should be renamed or repurposed as filterEdges  
     edgeIndexes = []
     for x in range(factor):    
       highScore = 0    
@@ -53,10 +65,6 @@ class SentenceNode:
 
   def displayContent(self):
     return self.content
-
-def compareSentences():
-  pass
-
 
 
 
@@ -96,7 +104,7 @@ def commonTest():
   testGraph.addNode(D)
   testGraph.compareSentences()
   testGraph.showEdges()
-  print(testGraph.filterSentences(2))
+  #print(testGraph.filterEdges(2))
   
 if __name__ == "__main__":
   commonTest()
