@@ -5,7 +5,7 @@ class SentenceGraph:
   graphEdges = {} # key = (nodeA.order, nodeB.order) | value = weight (int or float) 
   sentenceScores = {} # key = SentenceNode order (int) | value = score (int or float) 
   ranks = {}  
-
+  selected = []
   def __init__(self):
     pass
 
@@ -24,7 +24,7 @@ class SentenceGraph:
       commonWords = set.intersection(set(a.content.split(' ')), set(b.content.split(' ')))
       self.updateConnection(a.order, b.order, len(commonWords))
 
-  def rankSentences(self):
+  def rankSentences(self, factor):
     for V in self.graphVertices:
       for key in self.graphEdges:       
         if V.order in key:
@@ -32,8 +32,31 @@ class SentenceGraph:
             self.ranks[V.order] += self.graphEdges[key]
           else:
             self.ranks[V.order] = self.graphEdges[key]
-    print(self.ranks)
+    for x in range(factor):    
+      highScore = 0    
+      index = 0    
+      for k,v in self.ranks.items():
+        if v > highScore:
+          highScore = v
+          index = k
+      self.ranks.pop(index, None)      
+      self.selected.append(index)
+    self.selected.sort()
 
+  def showSummary(self):
+    for index in self.selected:
+      print(self.graphVertices[index].content)
+
+  def showVertices(self):
+    #print(self.graphVertices) # currently prints objects
+    print("Graph Vertices")
+    for v in self.graphVertices:
+      print(v.content)
+  
+  def showEdges(self):
+    print(self.graphEdges)
+
+"""
   def filterEdges(self, factor): # should be renamed or repurposed as filterEdges  
     edgeIndexes = []
     for x in range(factor):    
@@ -46,14 +69,9 @@ class SentenceGraph:
       self.graphEdges.pop(edge, None)      
       edgeIndexes.append(edge)
     return edgeIndexes
+"""
 
-  def showVertices(self):
-    #print(self.graphVertices) # currently prints objects
-    print("Graph Vertices")
-    for v in self.graphVertices:
-      print(v.content)
-  def showEdges(self):
-    print(self.graphEdges)
+
 
 class SentenceNode:
   score = 0
