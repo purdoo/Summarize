@@ -5,7 +5,12 @@
 def getArticleTitle(path):
   with open(path, 'r') as fin:
     title = fin.readline()
-  print(title)
+  return title.strip()
 
+def getTitleWords(title):
+  for word in title.split(' '):
+    print(word)
 if __name__ == "__main__":
-  getArticleTitle('Articles/Zika.txt')
+  title = getArticleTitle('Articles/Zika.txt')
+  print(title)
+  getTitleWords(title)
