@@ -6,7 +6,7 @@
 
 # Hardcoded 'Lists'
 punct = [',','.',':',';','\'','\"','|']
-ignore = ['and', 'the', 'but', 'so', 'like', 'be']
+ignore = ['and', 'the', 'but', 'so', 'like', 'be', 'a','to']
 
 def getArticleTitle(path):
   with open(path, 'r') as fin:
@@ -16,7 +16,6 @@ def getArticleTitle(path):
 def getTitleWords(title):
   words = []
   for word in title.split(' '):
-    #print(word)
     words.append(word)
   return words
 
